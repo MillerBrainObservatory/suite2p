@@ -178,9 +178,8 @@ def select_rois(ops: Dict[str, Any], mov: np.ndarray, diameter=None):
             (np.percentile(mean_img, 99) - np.percentile(mean_img, 1)), 0, 1)
     elif ops["anatomical_only"] == 3:
         if "meanImgE" in ops:
-            # meanImgE is already cropped to yrange/xrange from registration
-            # so we use it directly without additional cropping
-            img = ops["meanImgE"]
+            img = ops["meanImgE"][ops["yrange"][0]:ops["yrange"][1],
+                                  ops["xrange"][0]:ops["xrange"][1]]
         else:
             img = mean_img
             print("no enhanced mean image, using mean image instead")
